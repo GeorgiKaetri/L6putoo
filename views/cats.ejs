@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <h1>Cat Gallery</h1>
+    <h4>Add new photos using the box below:</h4>
+    <form action="/addCats" method="post">
+        <input type="text" name="url" placeholder="Link to the image(Copy image adress)">
+        <button type="submit" name="submit">Add!</button>
+    </form>
+    <form action="/backToLogin" method="post">
+        <button type="submit" name="submit">Back to login page!</button>
+    </form>
+    <div id="img-container">
+        <% imageUrls.forEach(function(url) { %>
+            <img src="<%= url %>" alt="Dynamic Image">
+            <% }); %>
+    </div>
+
+</body>
+
+</html>

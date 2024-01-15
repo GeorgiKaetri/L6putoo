@@ -1,0 +1,25 @@
+img {
+    width: 350px;
+    height: 350px;
+}
+
+#img-container {
+    display: grid;
+
+    grid-template-columns: repeat(3, 350px);
+    grid-auto-rows: 350px;
+    gap: 10px;
+}
+
+form {
+    margin: 0 0 50px 0;
+}
+
+input {
+    width: 300px;
+}
+
+body {
+    display: grid;
+    place-items: center;
+}
