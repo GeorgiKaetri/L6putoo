@@ -6,7 +6,7 @@ const app = express();
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
-
+const reviews = [];
 const accounts = [];
 const images = [
     "https://gomagcdn.ro/domains/petmax.ro/files/files/mikhail-vasilyev-ifxjddqk-0u-unsplash-331835.jpg",
@@ -58,11 +58,12 @@ app.post("/login", (req, res) => {
 app.get("/cats", (req, res) => {
     let usernameLogin = req.query.usernameLogin || '';
     console.log("Username in /cats:", usernameLogin);
-
+  
     res.render("cats", {
         imageUrls: images,
-        usernameLogin: usernameLogin,
+        username: usernameLogin,
     });
+      username.push(usernameLogin);
 });
 
 
@@ -110,17 +111,24 @@ app.post("/addCatsApi", (req, res) => {
 
 
 
-app.get("/cats", (req, res) => {
-    res.render("cats", {
-        imageUrls: images,
-    });
-});
+
 
 app.post("/backToLogin", (req, res) => {
     res.redirect("/");
 });
 
+
+
+app.post("/review", (req, res) => {
+    let anotherreview = req.body.review;
+   
+
+    reviews.push({
+        review: anotherreview,
+    });
+    res.redirect("/cats");
+});
+
 app.listen(3000, () => {
     console.log("Server started on port 3000");
 });
-
