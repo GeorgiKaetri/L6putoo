@@ -10,9 +10,8 @@
 
 <body>
 
-  
     <h1>Cat Gallery</h1>
-   <h1>Welcome <%= username %></h1>
+    <h1>Welcome, <%= username %></h1>
     <h4>Add new photos using the box below:</h4>
     <form action="/addCats" method="post">
         <input type="text" name="url" placeholder="Link to the image (Copy image address)">
@@ -20,43 +19,36 @@
     </form>
 
     <form action="/addCatsApi" method="post">
-        
         <button type="submit" name="submitApi">Add a random cat image!</button>
     </form>
+    <h4>You can see which user had posted the images by pointing you mouse at the images!</h4>
 
     <form action="/backToLogin" method="post">
         <button type="submit" name="submit">Back to login page!</button>
     </form>
     <div id="img-container">
-      <% imageUrls.forEach(function(url) { %>
-    <div>
-        <img src="<%= url %>" alt="Image" title="<%= username %>">
-        <p><%= username %></p>
+        <% for (let i = 0; i < imageUrls.length; i++) { %>
+            <div>
+                <img src="<%= imageUrls[i] %>" alt="Image" title="<%= usernames[i] %>">
+            </div>
+        <% } %>
     </div>
-<% }); %>
-    </div>
-</br>
     </br>
-    <h1>Kontaktinfo:
-    </h1>
+    </br>
+    <h1>Contacts:</h1>
     <p>
-Epost: kaetrigeorgi@gmail.com </br>
-Telefon: 56045287
+        Email: kaetrigeorgi@gmail.com </br>
+        Phone: 56045287
     </p>
 
-    <h1>Tagasiside</h1>
+    <h1>Review</h1>
     <form action="/review" method="post">
-        <input type="text" name="review" placeholder="Teie tagasiside">
-       
-        <button type="submit" name="reviewbut">Saada</button>
+        <input type="text" name="review" placeholder="Your review">
+        <button type="submit" name="reviewbut">Send</button>
     </form>
-    </body>
-<script>
- 
-  
-
-</script>
-  
 </body>
+<script>
+  
+</script>
 
 </html>
