@@ -6,12 +6,11 @@ const app = express();
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
+const uploaders =[];
 const reviews = [];
 const accounts = [];
 const images = [
-    "https://gomagcdn.ro/domains/petmax.ro/files/files/mikhail-vasilyev-ifxjddqk-0u-unsplash-331835.jpg",
-    "https://www.zooplus.ro/ghid/wp-content/uploads/2022/04/Psihologia-pisicii-si-cand-este-necesar-un-psiholog.webp",
-    "https://www.zooplus.ro/ghid/wp-content/uploads/2020/10/pui-de-pisica-%C3%AEn-noua-cas%C4%83.webp",
+   
 ];
 
 app.get("/", (req, res) => {
@@ -58,12 +57,24 @@ app.post("/login", (req, res) => {
 app.get("/cats", (req, res) => {
     let usernameLogin = req.query.usernameLogin || '';
     console.log("Username in /cats:", usernameLogin);
-  
+
+    if (usernameLogin !== "") {
+        uploaders.push(usernameLogin);
+    } else {
+        let lastUploader = uploaders.length > 0 ? uploaders[uploaders.length - 1] : undefined;
+        console.log("Using last non-empty uploader:", lastUploader);
+        uploaders.push(lastUploader);
+    }
+
+    console.log("Updated uploaders:", uploaders);
+
     res.render("cats", {
         imageUrls: images,
-        username: usernameLogin,
+        usernames: uploaders,
+        username: uploaders[uploaders.length -1]
+
+        
     });
-      username.push(usernameLogin);
 });
 
 
@@ -73,7 +84,7 @@ app.get("/cats", (req, res) => {
 
 app.post("/addCats", (req, res) => {
     let url = req.body.url;
-    let username = req.body.usernameLogin;
+  
     console.log("hello"); 
     if (url !== "") {
         images.push(url);
@@ -84,8 +95,7 @@ app.post("/addCats", (req, res) => {
 
 
 app.post("/addCatsApi", (req, res) => {
-    let username = req.query.usernameLogin || '';
-    console.log(username);
+  
 
     fetch('https://api.thecatapi.com/v1/images/search')
         .then(response => {
@@ -97,6 +107,7 @@ app.post("/addCatsApi", (req, res) => {
         .then(data => {
             let url = data[0].url;
             images.push(url);
+            console.log(uploaders);
             res.redirect("/cats");
         })
         .catch(error => {
